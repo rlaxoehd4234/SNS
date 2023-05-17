@@ -39,7 +39,7 @@ public class UserControllerTest {
         String username ="kimtaedong";
         String password = "1111";
 
-        when(userService.join()).thenReturn(mock(User.class));
+        when(userService.join(username, password)).thenReturn(mock(User.class));
 
 
         mockMvc.perform(post("/api/v1/users/join")
@@ -55,7 +55,7 @@ public class UserControllerTest {
         String username ="kimtaedong";
         String password = "1111";
 
-        when(userService.join()).thenThrow(new SnsApplicationException());
+        when(userService.join(username, password)).thenThrow(new SnsApplicationException());
 
 
         mockMvc.perform(post("/api/v1/users/join")
@@ -71,7 +71,7 @@ public class UserControllerTest {
         String username ="kimtaedong";
         String password = "1111";
 
-        when(userService.login()).thenReturn("test_token");
+        when(userService.login(username, password)).thenReturn("test_token");
 
 
         mockMvc.perform(post("/api/v1/users/login")
@@ -87,7 +87,7 @@ public class UserControllerTest {
         String username ="kimtaedong";
         String password = "1111";
 
-        when(userService.login()).thenThrow(new SnsApplicationException());
+        when(userService.login(username ,password)).thenThrow(new SnsApplicationException());
 
 
         mockMvc.perform(post("/api/v1/users/login")
@@ -103,7 +103,7 @@ public class UserControllerTest {
         String username ="kimtaedong";
         String password = "1111";
 
-        when(userService.login()).thenThrow(new SnsApplicationException());
+        when(userService.login(username, password)).thenThrow(new SnsApplicationException());
 
 
         mockMvc.perform(post("/api/v1/users/login")

@@ -15,11 +15,8 @@ public class UserController {
 
     @PostMapping("/join")
     public void join(){
-        userService.join();
+        userService.join("", "");
     }
-    @PostMapping("/login")
-    public void login(){
-        userService.login();
-    }
+
 
 }
