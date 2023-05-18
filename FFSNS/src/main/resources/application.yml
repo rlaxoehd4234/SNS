@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+
+  datasource:
+    hikari:
+      maximum-pool-size: 4
+
+    url: jdbc:mysql://127.0.0.1:3306/FFSNS
+    username: root
+    password: dkdldb12
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  secret-key: kimtaedong_FFSNS_project_2023_secret_key
+
+  token:
+    expired-time-ms: 2592000000

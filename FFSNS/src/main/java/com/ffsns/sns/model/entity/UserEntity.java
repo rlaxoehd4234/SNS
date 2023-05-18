@@ -1,5 +1,6 @@
-package com.ffsns.sns.entity;
+package com.ffsns.sns.model.entity;
 
+import com.ffsns.sns.model.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -27,7 +28,8 @@ public class UserEntity {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.USER;
 
     @Column(name = "registered_at")
     private Timestamp registeredAt;
@@ -50,6 +52,10 @@ public class UserEntity {
         this.updatedAt = Timestamp.from(Instant.now());
     }
 
-
-
+    public static UserEntity of(String userName, String password){
+        UserEntity user = new UserEntity();
+        user.setUserName(userName);
+        user.setPassword(password);
+        return user;
+    }
 }
