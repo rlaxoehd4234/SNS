@@ -6,6 +6,8 @@ import com.ffsns.sns.controller.request.PostModifyRequest;
 import com.ffsns.sns.controller.request.UserJoinRequest;
 import com.ffsns.sns.exception.ErrorCode;
 import com.ffsns.sns.exception.SnsApplicationException;
+import com.ffsns.sns.fixture.PostEntityFixture;
+import com.ffsns.sns.model.Post;
 import com.ffsns.sns.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -76,6 +79,8 @@ public class PostControllerTest {
     void 포스트수정() throws Exception {
         String title = "123123";
         String body = "123123";
+
+        when(postService.modify(eq(title), eq(body), any(), any())).thenReturn(Post.fromEntity(PostEntityFixture.get("userName",1,1)));
 
         mockMvc.perform(put(("/api/v1/posts/1"))
                 .contentType(MediaType.APPLICATION_JSON)

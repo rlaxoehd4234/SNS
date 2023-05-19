@@ -4,7 +4,6 @@ import com.ffsns.sns.exception.ErrorCode;
 import com.ffsns.sns.exception.SnsApplicationException;
 import com.ffsns.sns.fixture.PostEntityFixture;
 import com.ffsns.sns.fixture.UserEntityFixture;
-import com.ffsns.sns.model.User;
 import com.ffsns.sns.model.entity.PostEntity;
 import com.ffsns.sns.model.entity.UserEntity;
 import com.ffsns.sns.repository.PostEntityRepository;
@@ -75,10 +74,13 @@ public class PostServiceTest {
         Integer postId = 1;
 
 
-        PostEntity post = PostEntityFixture.get(userName ,postId);
+
+        PostEntity post = PostEntityFixture.get(userName ,postId,1);
         UserEntity user = post.getUserEntity();
-        when(userEntityRepository.findByUserName(user.getUserName())).thenReturn(Optional.of(user));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(user));
         when(postEntityRepository.findById(postId)).thenReturn(Optional.of(post));
+        when(postEntityRepository.saveAndFlush(any())).thenReturn(post);
+
 
         Assertions.assertDoesNotThrow( () -> postService.modify(title, body, userName, postId));
 
@@ -92,7 +94,7 @@ public class PostServiceTest {
         Integer postId = 1;
 
 
-        PostEntity post = PostEntityFixture.get(userName ,postId);
+        PostEntity post = PostEntityFixture.get(userName ,postId,1);
         UserEntity user = post.getUserEntity();
         when(userEntityRepository.findByUserName(user.getUserName())).thenReturn(Optional.of(user));
         when(postEntityRepository.findById(postId)).thenReturn(Optional.empty());
@@ -108,10 +110,10 @@ public class PostServiceTest {
         Integer postId = 1;
 
 
-        PostEntity post = PostEntityFixture.get(userName ,postId);
-        UserEntity userEntity = UserEntityFixture.get("jjabtaedong","123");
+        PostEntity post = PostEntityFixture.get(userName ,postId,1);
+        UserEntity userEntity = UserEntityFixture.get("jjabtaedong","123", 2);
 
-        when(userEntityRepository.findByUserName(userEntity.getUserName())).thenReturn(Optional.of(userEntity));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(userEntity));
         when(postEntityRepository.findById(postId)).thenReturn(Optional.of(post));
 
         SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> postService.modify(title, body, userName, postId));
