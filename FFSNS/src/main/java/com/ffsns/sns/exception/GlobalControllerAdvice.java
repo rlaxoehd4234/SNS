@@ -1,4 +1,4 @@
-package com.ffsns.sns.service;
+package com.ffsns.sns.exception;
 
 import com.ffsns.sns.controller.response.Response;
 import com.ffsns.sns.exception.ErrorCode;

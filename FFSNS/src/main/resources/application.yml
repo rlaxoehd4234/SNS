@@ -19,7 +19,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 jwt:
-  secret-key: kimtaedong_FFSNS_project_2023_secret_key
+  secret-key: kimtaedong_FFSNS_project_2023_secret_key_test_token_secret_key_aaaaaaaaaaa
 
   token:
     expired-time-ms: 2592000000
