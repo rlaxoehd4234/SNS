@@ -1,8 +1,13 @@
 package com.ffsns.sns.model.entity;
 
+import com.ffsns.sns.model.AlarmArgs;
+import com.ffsns.sns.model.AlarmType;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -10,24 +15,27 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
-@Table(name = "likes")
+@Table(name = "alarm")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE likes SET deleted_at = NOW() where id = ?")
+@TypeDef(name = "json", typeClass = JsonBinaryType.class)
+@SQLDelete(sql = "UPDATE alarm SET deleted_at = NOW() where id = ?")
 @Where(clause = "deleted_at is NULL")
-public class LikeEntity {
+public class AlarmEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    // 알람을 받은 사람에 대한 정보
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private PostEntity postEntity;
+    @Enumerated(EnumType.STRING)
+    private AlarmType alarmType;
 
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private AlarmArgs args;
     @Column(name = "registered_at")
     private Timestamp registeredAt;
 
@@ -50,10 +58,11 @@ public class LikeEntity {
     }
 
 
-    public static LikeEntity of(PostEntity postEntity, UserEntity userEntity){
-        LikeEntity entity = new LikeEntity();
+    public static AlarmEntity of(UserEntity userEntity, AlarmType alarmType, AlarmArgs args){
+        AlarmEntity entity = new AlarmEntity();
         entity.setUserEntity(userEntity);
-        entity.setPostEntity(postEntity);
+        entity.setAlarmType(alarmType);
+        entity.setArgs(args);
 
         return entity;
     }

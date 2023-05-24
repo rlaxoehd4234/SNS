@@ -10,16 +10,18 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
-@Table(name = "likes")
+@Table(name = "comment")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE likes SET deleted_at = NOW() where id = ?")
+@SQLDelete(sql = "UPDATE comment SET deleted_at = NOW() where id = ?")
 @Where(clause = "deleted_at is NULL")
-public class LikeEntity {
+public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "comment")
+    private String comment;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -50,10 +52,11 @@ public class LikeEntity {
     }
 
 
-    public static LikeEntity of(PostEntity postEntity, UserEntity userEntity){
-        LikeEntity entity = new LikeEntity();
+    public static CommentEntity of(PostEntity postEntity, UserEntity userEntity, String comment){
+        CommentEntity entity = new CommentEntity();
         entity.setUserEntity(userEntity);
         entity.setPostEntity(postEntity);
+        entity.setComment(comment);
 
         return entity;
     }

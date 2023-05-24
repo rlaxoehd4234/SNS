@@ -1,37 +1,37 @@
 package com.ffsns.sns.controller.response;
 
+import com.ffsns.sns.model.Comment;
 import com.ffsns.sns.model.Post;
-import com.ffsns.sns.model.User;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 
 @Getter
 @AllArgsConstructor
-public class PostResponse {
+public class CommentResponse {
     private Integer id;
 
-    private String title;
-    private String body;
+    private String comment;
+    private String userName;
+    private Integer postId;
 
     private Timestamp registeredAt;
-
-    private UserResponse user;
 
     private Timestamp updatedAt;
 
     private Timestamp deletedAt;
 
-    public static PostResponse fromPost(Post post){
-        return new PostResponse(
-                post.getId(),
-                post.getTitle(),
-                post.getBody(),
-                post.getRegisteredAt(),
-                UserResponse.fromUser(post.getUser()),
-                post.getUpdatedAt(),
-                post.getDeletedAt()
+    public static CommentResponse fromComment(Comment comment){
+        return new CommentResponse(
+                comment.getId(),
+                comment.getComment(),
+                comment.getUserName(),
+                comment.getPostId(),
+                comment.getRegisteredAt(),
+                comment.getUpdatedAt(),
+                comment.getDeletedAt()
         );
     }
 
