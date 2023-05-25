@@ -28,7 +28,8 @@ public class AuthenticationConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().regexMatchers("^(?!/api/).*");
+        return (web) -> web.ignoring().regexMatchers("^(?!/api/).*")
+                .regexMatchers("/api/*/users/join", "/api/*/users/login");
         // Front-end code 에서 발생하는 필요없는 요청을 처리하지 않는다.
     }
 

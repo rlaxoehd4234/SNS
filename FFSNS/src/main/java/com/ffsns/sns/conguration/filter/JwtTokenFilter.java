@@ -37,9 +37,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         try{
-
-
-
             final String token = header.split(" ")[1].trim();
             //TODO : check the token is valid
             if(JwtTokenUtils.isExpired(token , key)){
@@ -52,9 +49,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             // TODO : get username from token
             String userName = JwtTokenUtils.getUserName(token,key);
             User user = userService.loadUserByUserName(userName);
-
-
             //TODO: check the username is valid
+            if (!JwtTokenUtils.validate(token, user.getUsername(), key)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

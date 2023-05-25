@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 public class Alarm {
     private Integer id;
     // 알람을 받은 사람에 대한 정보
-    private User user;
     private AlarmType alarmType;
     private AlarmArgs args;
     private Timestamp registeredAt;
@@ -23,7 +22,6 @@ public class Alarm {
     public static Alarm fromEntity(AlarmEntity entity){
         return new Alarm(
                 entity.getId(),
-                User.fromEntity(entity.getUserEntity()),
                 entity.getAlarmType(),
                 entity.getArgs(),
                 entity.getRegisteredAt(),

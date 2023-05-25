@@ -16,10 +16,15 @@ public class JwtTokenUtils {
         Date expiredDate = extractClaims(token , key).getExpiration();
         return expiredDate.before(new Date());
     }
-
     public static String getUserName(String token , String key){
         return extractClaims(token, key).get("userName", String.class);
     }
+    public static Boolean validate(String token, String userName, String key) {
+        String usernameByToken = getUserName(token, key);
+        return usernameByToken.equals(userName) && !isExpired(token, key);
+    }
+
+
 
 
     //token 에서 claims 를 가지고 와야 한다.

@@ -64,6 +64,8 @@ public class PostService {
         }
 
         postRepository.delete(postEntity);
+        commentEntityRepository.deleteAllByPostEntity(postEntity);
+        likeEntityRepository.deleteAllByPostEntity(postEntity);
     }
 
     public Page<Post> list(Pageable pageable){
@@ -94,7 +96,7 @@ public class PostService {
 
     }
 
-    public int likeCount(Integer postId){
+    public long likeCount(Integer postId){
         PostEntity postEntity = validatePostEntity(postId);
 
         return likeEntityRepository.countByPostEntity(postEntity);
