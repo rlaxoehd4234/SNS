@@ -12,6 +12,27 @@ spring:
     host: localhost
     port: 6379
 
+  kafka:
+    properties:
+      security.protocol:
+        sasl.mechanism:
+      consumer:
+        properties.spring.json.trusted.packages: "*"
+        bootstrap-servers: 127.0.0.1:9092
+        group-id: notification
+        auto-offset-reset: latest
+        key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      listener:
+        ack-mode: MANUAL
+      producer:
+        bootstrap-servers: 127.0.0.1:9092
+        key-deserializer: org.apache.kafka.common.serialization.IntegerSerializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties.enable.idempotence: false
+
+
+
 
   datasource:
     hikari:
@@ -23,10 +44,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
+
+
 jwt:
   secret-key: kimtaedong_FFSNS_project_2023_secret_key_test_token_secret_key_aaaaaaaaaaa
 
   token:
     expired-time-ms: 2592000000
+
+
 
 
