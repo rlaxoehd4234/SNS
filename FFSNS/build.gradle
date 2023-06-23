@@ -38,6 +38,11 @@ dependencies {
     //kafka
     implementation 'org.springframework.kafka:spring-kafka:3.0.7'
 
+    //springDoc
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+
+
+
 
 
 
